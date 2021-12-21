@@ -67,8 +67,12 @@ def generate(proj):
 
         os.chdir('../../templates')  # backup and down to templates dir
         touch.touch('base.html')  # create base.html -the BS master
+        shutil.copy(proj['cwd'] + '/resources/base.html', ".")  # copy the default base.html
         touch.touch('index.html')  # create index.html
+        shutil.copy(proj['cwd'] + '/resources/index.html', ".")  # copy the default index.html
         touch.touch('contact.html')  # create contact.html
+        shutil.copy(proj['cwd'] + '/resources/contact.html', ".")  # copy the default bg.jpg image
+
 
     else:
         print('Error: proj root does not exist.')
