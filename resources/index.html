@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+
+{% from "_formhelpers.html" import render_field %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<h1 class="display-2 text-center">Instructions</h1>
+<p class="text-center" style="font-weight: bold;">Python Flask Project Generator
+  <br><br>This Flask app accepts input in the form, below, and creates an executable Flask project from your input
+  <br><br>The results are displayed on the "Results" page for your verification
+  <br><br>There is Help available for each box on the form
+
+</p>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2 style="align: center">Form</h2>
+        <form class="" action="/" method="post">
+          <dl>
+            {{ form.csrf_token }}
+            {{ render_field(form.proj_name) }}
+            {{ render_field(form.page_list) }}
+            {{ render_field(form.navbar) }}
+          </dl>
+
+          <p>{{ form.submit }}</p>
+
+        </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
