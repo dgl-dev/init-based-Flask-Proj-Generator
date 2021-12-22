@@ -1,0 +1,5 @@
+"""
+Starts up the whole mess
+"""
+# from app import app - default if user names appDir "app" - BOO HISS
+# correct line is inserted during generation 'from appDir import app'

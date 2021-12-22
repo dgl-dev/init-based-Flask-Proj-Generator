@@ -2,6 +2,22 @@
 IbFgen
 """
 import os
+import stat
+
+
+def append_import(fp, impt_stmt):
+    """
+    append_import(fp, impt_stmt)
+    :param fp:  filepath
+    :type fp:
+    :param impt_stmt:  import stmt to append
+    :type impt_stmt:
+    :return:    none - throws FileNotFound
+    :rtype:
+    """
+    with open(fp, "a") as fo:
+        # Append import stmt at the end of file
+        fo.write(impt_stmt)
 
 
 def flake8_check(proj):
@@ -47,6 +63,17 @@ def generate(proj):
         os.system("rm -rf " + proj["projName"])
         os.mkdir(proj["projName"])  # create the proj dir
         os.chdir(proj["projName"])  # move to the proj dir
+        touch.touch('config.py')        # create config.py
+        shutil.copy(proj['cwd'] + '/resources/config.py', ".")  # copy the default config.py
+        touch.touch('runner')
+        shutil.copy(proj['cwd'] + '/resources/runner', ".")  # copy the default runner
+        append_import('./runner', "from " + proj['appName'] + " import app")     # append the import stmt
+        os.chmod('./runner', stat.S_IXUSR)      ## Set exec to user
+        os.mkdir(proj['appName'])   # create app dir
+        os.chdir(proj['appName'])  # move to app dir
+        touch.touch('__init__.py')      # create  __init__.py
+        shutil.copy(proj['cwd'] + '/resources/__init__.py', ".")  # copy the default __init__.py
+        append_import('./__init__.py', "from " + proj['appName'] + "import routes")    # append the import stmt
         os.mkdir('templates')  # make the templates directory
         os.mkdir('static')  # make the static dir
         os.chdir('static')  # move to static dir
@@ -85,17 +112,19 @@ def main():
         "projRoot": "",  # Full path to target dir or work area
         "projName": "",  # valid Flask project name
         "appName" : "",  # valid Flask app name
+        "config"  : "",  # config.sys - using Config class
         "rqmts"   : "",  # Full path to requirements.txt - see README for default if ""
         'pgList'  : []  # List of page names
         # ??????
-    }
+        }
 
     print(f"Welcome to IbFgen")
     print(proj)
 
-    proj["projName"] = input("Enter valid python proj name: ")
-    proj["appName"] = input("Enter valid Flask package name: ")
-    proj["projRoot"]= input("Enter full path to target dir: ")
+    proj["projName"] = str(input("Enter valid python proj name: "))
+    proj["appName"] = str(input("Enter valid Flask package name: "))
+    proj["projRoot"]= str(input("Enter full path to target dir: "))
+    proj["rqmts"] = str(input("Enter full path to your requirements.txt or hit enter for default: ") or 'default_requirements.txt')
     cwd_path = Path(os.getcwd())        # Path to current module
     proj["cwd"]  = str(cwd_path.parents[0]) # back up to main
 
