@@ -1,0 +1,7 @@
+"""
+Starts the app
+"""
+#
+# #  one line module  - from appPkg import app
+## ref''d by runApp - export FLASK_APP=appStart.py
+# # import statement is inserted during gen

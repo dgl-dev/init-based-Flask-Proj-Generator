@@ -1,0 +1,7 @@
+"#
+# # Startup
+#
+export FLASK_APP=appStart.py
+export FLASK_ENV=development
+
+flask run

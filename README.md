@@ -33,3 +33,20 @@ This generator addresses a point of confusion - having different things
      2. App name
      3. Requirements.txt - defaults to ???
      4. ?
+## RE-Design
+  Several files contain import statements which must be modified to 
+reference the appName  - ie: the name of the app package 
+containing __init__.py 
+
+I tried appending those - but that's flakey and one of them has an 
+imbedded import, ... 
+
+So, I'm changing to have generate methods for each of these file
+
+The files are: 
+  - appRun - bash - contains exports and flask run
+  - appStart.py - a one liner what imports app from appPkg
+  - routes.py - must have from appPkg import app
+Each of these will have a method gen_xxx and will load a file from resources
+  - to allow the user to customize - these files will be named appRun.sh.template,
+appStart.py.template and routes.py.template
