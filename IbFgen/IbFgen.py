@@ -25,9 +25,9 @@ def gen_routes(appPkg, tgt, cwd):
 
     for line in l:
         if "{{app}}"  in line:
-            line.replace("{{app}}", appPkg)
+            line.replace("{{app}}", appPkg)         ## NOT WORKING
 
-    with open(tgt + "/routes.py", "w") as ofl:
+    with open(tgt + "/routes.py", "w") as ofl:      # over-write existing
         ofl.write(l)
 
 
@@ -101,8 +101,8 @@ def generate(proj):
         touch.touch('__init__.py')      # create  __init__.pycat
         shutil.copy(proj['cwd'] + '/resources/__init__.py', ".")  # copy the default __init__.py
         append_import('./__init__.py', "from " + proj['appPkg'] + "import routes")    # append the import stmt
-        touch.touch('routes.py.template')  # make the templates directory
-        shutil.copy(proj['cwd'] + '/resources/gend/routes.py.', ".")  # copy the generated routes.py
+        touch.touch('routes.py')  # make the routes directory
+        shutil.copy(proj['cwd'] + '/resources/gend/routes.py', ".")  # copy the generated routes.py
         touch.touch('forms.py')  # make the templates directory
         shutil.copy(proj['cwd'] + '/resources/forms.py', ".")  # copy the default forms.py
         os.mkdir('templates')  # make the templates directory
@@ -168,9 +168,9 @@ def main():
 
     tgt = proj['cwd'] + '/resources/gend'     # work area for generated files
     os.chdir(tgt)
-    touch.touch('routes.py')
-    touch.touch('appRun')
-    touch.touch('appStart.py')
+    # touch.touch('routes.py')
+    # touch.touch('appRun')
+    # touch.touch('appStart.py')
     gen_routes(proj["appPkg"], tgt, proj['cwd'])     # gen custom routes.py
 
     generate(proj)
